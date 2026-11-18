@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ordear-backend-pdb-prod
+  namespace: ordear
+  labels:
+    app: ordear-backend-app
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: ordear-backend-app
