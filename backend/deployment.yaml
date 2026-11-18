@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordear-backend-deployment
+  namespace: ordear
+  labels:
+    app: ordear-backend-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: ordear-backend-app
+  template:
+    metadata:
+      labels:
+        app: ordear-backend-app
+    spec:
+      containers:
+        - name: ordear-backend
+          image: ipactconsult2026dockerhubadmin/clictoeat-backend:v2.0.7-prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5555
+          readinessProbe:
+            tcpSocket:
+              port: 5555
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 5555
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          envFrom:
+            - secretRef:
+                name: ordear-backend-secrets-prod
