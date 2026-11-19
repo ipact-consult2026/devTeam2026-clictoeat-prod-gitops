@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: ordear-backend
-          image: ipactconsult2026dockerhubadmin/clictoeat-backend:v2.0.7-prod
+          image: ipactconsult2026dockerhubadmin/clictoeat-backend:v2.0.7-prod-84
           imagePullPolicy: Always
           ports:
             - containerPort: 5555
