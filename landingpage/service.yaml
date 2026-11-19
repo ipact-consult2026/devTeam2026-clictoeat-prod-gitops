@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ordear-landing-service
+  namespace: ordear
+  labels:
+    app: ordear-landing-app
+spec:
+  selector:
+    app: ordear-landing-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 32099
+  type: NodePort
