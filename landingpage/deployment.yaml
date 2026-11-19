@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordear-landing-deployment
+  namespace: ordear
+  labels:
+    app: ordear-landing-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: ordear-landing-app
+  template:
+    metadata:
+      labels:
+        app: ordear-landing-app
+    spec:
+      containers:
+        - name: landing-page
+          image: ipactconsult2026dockerhubadmin/htmlapp:v3.0.9-prod
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: "5m"
+              memory: "16Mi"
+            limits:
+              cpu: "20m"
+              memory: "32Mi"
