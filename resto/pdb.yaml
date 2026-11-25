@@ -1,0 +1,12 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ordear-resto-pdb-prod
+  namespace: ordear
+  labels:
+    app: ordearfrontresto-app
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: ordearfrontresto-app
